@@ -500,39 +500,39 @@ This also means that we probably don't need to have this patch applied during On
 
 		try
 		{
-	    // A check to make sure we can actually find the TacticalManager
-	    var tacticalManager = GameState.FindManagedType("Il2CppMenace.Tactical.TacticalManager");
-	    if (tacticalManager == null)
-	    {
-	        _log.Error("TacticalManager not found.");
-	        return;
-	    }
-
-	    // Using reflection, we are going to search through the methods.
-	    // Without this, GetMethod uses a default that only finds public
-	    // instance methods. Probably, the method is public, but the SDK
-	    // uses this pattern as a safety net, so we will too.
-	    var method = tacticalManager.GetMethod("InvokeOnAttackTileStart",
-	        System.Reflection.BindingFlags.Instance |
-	        System.Reflection.BindingFlags.Public |
-	        System.Reflection.BindingFlags.NonPublic);
-
-	    // If the method can't be found, return.
-	    if (method == null)
-	    {
-	        _log.Error("InvokeOnAttackTileStart not found.");
-	        return;
-	    }
-
-	    // The postfix patch
-	    var postfix = typeof(Plugin).GetMethod(nameof(OnAttackTileStart_Postfix),
-	        System.Reflection.BindingFlags.Static |
-	  			System.Reflection.BindingFlags.NonPublic);
-
-	  	_harmony.Patch(method, postfix: new HarmonyMethod(postfix));
-	  	_log.Msg("Patched InvokeOnAttackTileStart.");
-	  }
-
+			// A check to make sure we can actually find the TacticalManager
+			var tacticalManager = GameState.FindManagedType("Il2CppMenace.Tactical.TacticalManager");
+			if (tacticalManager == null)
+			{
+				_log.Error("TacticalManager not found.");
+				return;
+			}
+		
+			// Using reflection, we are going to search through the methods.
+			// Without this, GetMethod uses a default that only finds public
+			// instance methods. Probably, the method is public, but the SDK
+			// uses this pattern as a safety net, so we will too.
+			var method = tacticalManager.GetMethod("InvokeOnAttackTileStart",
+				System.Reflection.BindingFlags.Instance |
+				System.Reflection.BindingFlags.Public |
+				System.Reflection.BindingFlags.NonPublic);
+		
+			// If the method can't be found, return.
+			if (method == null)
+			{
+				_log.Error("InvokeOnAttackTileStart not found.");
+				return;
+			}
+		
+			// The postfix patch
+			var postfix = typeof(Plugin).GetMethod(nameof(OnAttackTileStart_Postfix),
+				System.Reflection.BindingFlags.Static |
+					System.Reflection.BindingFlags.NonPublic);
+		
+			_harmony.Patch(method, postfix: new HarmonyMethod(postfix));
+			_log.Msg("Patched InvokeOnAttackTileStart.");
+		}
+		
 		catch (Exception ex)
 		{
 			_log.Error("Failed to patch InvokeOnAttackTileStart:");
