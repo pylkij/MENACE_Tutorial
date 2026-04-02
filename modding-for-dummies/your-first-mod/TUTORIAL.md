@@ -484,7 +484,7 @@ Hunh. Let's run a diagnostic scan to see what's actually in the assembly:
 
 That would do it. The correct name is `Il2CppMenace.Tactical.TacticalManger`, and not `Menace.Tactical.TacticalManager`. This also explains the SDK issue: it isn't a timing issue as previously hypothesized, but a name match.
 
-The more experienced among you how made it this far may well have seen this coming, and to be honest, I did too. This first came up when I made `Let Me Finish` so I knew where this is going. But, I figured this as helpful for two reasons for new modders:
+The more experienced among you who made it this far may well have seen this coming, and to be honest, I did too. This first came up when I made `Let Me Finish` so I knew where this is going. But, I figured this as helpful for two reasons for new modders:
 
 1. This is how a lot of debugging works. Find solution, build solution, modify solution, iterate until solution works. Just because the documentation for something says, "Do X", that doesn't always mean that is the way to do it. Often, solutions won't work right away, and you have to work through the problem to figure it out.
 2. Runtime scans for names will save you a huge amount of tedium. Before building any mod, it is well worth your time to go off and properly identify what things are actually called by doing a runtime scan. Trust, but verify.
@@ -527,11 +527,11 @@ This also means that we probably don't need to have this patch applied during On
 	    // The postfix patch
 	    var postfix = typeof(Plugin).GetMethod(nameof(OnAttackTileStart_Postfix),
 	        System.Reflection.BindingFlags.Static |
-	        System.Reflection.BindingFlags.NonPublic);
+	  			System.Reflection.BindingFlags.NonPublic);
 
-	    _harmony.Patch(method, postfix: new HarmonyMethod(postfix));
-	    _log.Msg("Patched InvokeOnAttackTileStart.");
-	  	}
+	  	_harmony.Patch(method, postfix: new HarmonyMethod(postfix));
+	  	_log.Msg("Patched InvokeOnAttackTileStart.");
+	  }
 
 		catch (Exception ex)
 		{
